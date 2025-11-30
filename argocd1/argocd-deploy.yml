@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tm-demo-aro
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/BharathiSaladi/argocd.git
+    targetRevision: HEAD
+    path: k8s # Path within the Git repository to your Kubernetes YAML files
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tm-demo-argo
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
